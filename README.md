@@ -1,1 +1,1 @@
-# Objektinis Programaviams
+# Objektinis Programavimas
