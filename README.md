@@ -1,1 +1,1 @@
-# ObjekProg
+# Objektinis Programaviams
