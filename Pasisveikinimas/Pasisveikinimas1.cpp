@@ -1,39 +1,51 @@
+
 #include <iostream>
 #include <string>
-
-using std::string;
 using std::cout;
+using std::string;
 using std::endl;
 using std::cin;
-int main()
+struct Parametrai
 {
-	printf("Iveskite varda: \n");
 	string vardas;
-	cin>>vardas;
+	int tarpai;
+};
+int main() {
+	Parametrai A;
+	printf("Koks Jusu vardas: ");
+	char *charas;
+	cin >> A.vardas;
 	string sveikinimas;
-	if (vardas.back() == 's')
-		sveikinimas = {" Sveikas, " + vardas + "! "};
-	else
-		sveikinimas = {" Sveika, " + vardas + "! "};
-	string eilute1;
-	for (int i = 0; i <= sveikinimas.length() + 1; i++)
-	{
-		eilute1 += '*';
+	if (A.vardas.back() == 's') {
+		sveikinimas = "Sveikas, " + A.vardas + " !";
+	} else {
+		sveikinimas = "Sveika, " + A.vardas + " !";
 	}
-	string eilute2;
-	eilute2 += '*';
-	for (int i = 0; i < sveikinimas.length(); i++)
-	{
-		eilute2 += ' ';
+	printf("iveskite remelio dydi (nuo 1 iki 10): ");
+	scanf("%i", &A.tarpai);
+	if (A.tarpai > 10)
+		A.tarpai = 10;
+	if (A.tarpai < 1)
+		A.tarpai = 1;
+	const int eilutes = A.tarpai * 2 + 3;
+	const int stulpeliai = sveikinimas.length() + A.tarpai * 2 + 2;
+	cout << endl;
+	for (int e = 0; e != eilutes; ++e) {
+		int s = 0;
+		while (s != stulpeliai) {
+			if (e == A.tarpai + 1 && s == A.tarpai + 1) {
+
+				printf("%s", sveikinimas.c_str());
+				s += sveikinimas.size();
+			} else {
+				if (e == 0 || e == eilutes - 1 || s == 0 || s == stulpeliai - 1)
+					printf("*");
+				else
+					printf(" ");
+				++s;
+			}
+		}
+		cout << endl;
 	}
-	eilute2 += '*';
-	string eilute3 = {'*' + sveikinimas + '*'};
-	string eilute4 = eilute2;
-	string eilute5 = eilute1;
-	cout << eilute1 << endl;
-	cout << eilute2 << endl;
-	cout << eilute3 << endl;
-	cout << eilute4 << endl;
-	cout << eilute5 << endl;
 	return 0;
 }
