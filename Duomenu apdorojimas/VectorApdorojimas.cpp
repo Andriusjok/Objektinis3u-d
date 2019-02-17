@@ -116,7 +116,7 @@ void Input(vector<studentas> &studentai) {
 	{
 		cin.clear();
 		cin.ignore(100, '\n');
-		cout << "Vardo ivestyje padarete klaida, bandykite dar karta" << endl;
+		cout << "Vardo ivestyje padarete klaida, bandykite ivesti dar karta" << endl;
 		cin >> ivedimas.vardas;
 	}
 	cout << "Iveskite studento pavarde" << endl;
