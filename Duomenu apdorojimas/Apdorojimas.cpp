@@ -2,7 +2,8 @@
 #include <string>
 #include <iomanip>
 #include <bits/stdc++.h>
-
+#include <math.h>
+#include <random>
 using std::cout;
 using std::endl;
 using std::cin;
@@ -18,7 +19,7 @@ struct node {
 	double suma = 0;
 	double galutinis = 0;
 	int dydis = 1;
-	int mediana=0;
+	double mediana = 0;
 	void prideti(int k)
 	{
 		if (!A)
@@ -62,6 +63,8 @@ node* insert(node *&root) {
 		new_node->next = nullptr;
 		cout << "Iveskite Studento varda" << endl;
 		cin >> new_node->vardas;
+		cin.clear();
+		cin.ignore(100, '\n');
 		while (cin.fail())
 		{
 			cin.clear();
@@ -71,6 +74,8 @@ node* insert(node *&root) {
 		}
 		cout << "Iveskite studento pavarde" << endl;
 		cin >> new_node->pavarde;
+		cin.clear();
+		cin.ignore(100, '\n');
 		while (cin.fail())
 		{
 			cin.clear();
@@ -78,43 +83,126 @@ node* insert(node *&root) {
 			cout << "Pavardes ivestyje padarete klaida, bandykite dar karta" << endl;
 			cin >> new_node->pavarde;
 		}
-		cout << "Iveskite namu darbu pazymius (nuo 1 iki 10), jei pazymiu nebera, iveskite 0" << endl;
-		bool Pazymiuivedimas = true;
-		int l; //response
-		int n = 0; //namu darbu pazymiu kiekis
-		while (Pazymiuivedimas = true)
-		{
-			cin >> l;
-			while (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
-				cin >> l;
-			}
-			if (l >= 1 && l <= 10)
-			{
-
-				new_node->prideti(l);
-				n++;
-			}
-			else
-			{
-				Pazymiuivedimas = false;
-				break;
-			}
-		}
-		cout << "Iveskite egzamino rezultata" << endl;
-		cin >> new_node->e;
-		while (cin.fail())
+		int r;
+		cout << "Ar norite kad pazymius generuotu uz jus? 1=taip 0=ne" << endl;
+		cin >> r;
+		cin.clear();
+		cin.ignore(100, '\n');
+		while (cin.fail() or r != 0 && r != 1)
 		{
 			cin.clear();
 			cin.ignore(100, '\n');
 			cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
+			cin >> r;
+		} int n;
+		if (r == 0) {
+			cout << "Iveskite namu darbu pazymius (nuo 1 iki 10), jei pazymiu nebera, iveskite 0" << endl;
+			bool Pazymiuivedimas = true;
+			int l; //response
+			int n = 0; //namu darbu pazymiu kiekis
+			while (Pazymiuivedimas = true)
+			{
+				cin >> l;
+				cin.clear();
+				cin.ignore(100, '\n');
+				while (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(100, '\n');
+					cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
+					cin >> l;
+				}
+				if (l >= 1 && l <= 10)
+				{
+
+					new_node->prideti(l);
+					n++;
+				}
+				else
+				{
+					Pazymiuivedimas = false;
+					break;
+				}
+			}
+			cout << "Iveskite egzamino rezultata" << endl;
 			cin >> new_node->e;
+			cin.clear();
+			cin.ignore(100, '\n');
+			while (cin.fail() or new_node->e > 10 or new_node->e < 0)
+			{
+				cin.clear();
+				cin.ignore(100, '\n');
+				cout << "Ivedete ne skaiciu (0-10), bandykite dar karta" << endl;
+				cin >> new_node->e;
+			}
+		} else
+		{
+			int n;
+			cout << "Kiek norite sugeneruoti namu darbu pazymiu (iki milijono)?" << endl;
+			cin >> n;
+			cin.clear();
+			cin.ignore(100, '\n');
+			while (cin.fail() or n > 1000000)
+			{
+				cin.clear();
+				cin.ignore(100, '\n');
+				cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
+				cin >> n;
+			}
+			new_node->dydis = n;
+			//Stephan T. Lavavej siulomas random library solution
+			std::random_device rd;
+			std::mt19937 mt(rd());
+			std::uniform_real_distribution<double> dist(1, 11);
+			for (int i = 0; i < n; i++)
+			{
+				new_node->prideti(round(dist(mt)));
+			}
+			new_node->e = round(dist(mt));
 		}
-		new_node->suma = getSum(new_node->dydis, new_node->A);
-		new_node->galutinis = 0.4 * new_node->suma / n + 0.6 * new_node->e;
+		int c;
+		cout << "Jei norite isvesti studento vidurki, iveskite 1, jei mediana, iveskite 0" << endl;
+		cin >> c;
+		cin.clear();
+		cin.ignore(100, '\n');
+		while (cin.fail() or c != 0 && c != 1)
+		{
+			cin.clear();
+			cin.ignore(100, '\n');
+			cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
+			cin >> c;
+		}
+		if (c == 1) {
+			if (n != 0) {
+				new_node->suma = getSum(new_node->dydis, new_node->A);
+				new_node->galutinis = 0.4 * new_node->suma / n + 0.6 * new_node->e;
+			}
+			else new_node->galutinis = 0.6 * new_node->e;
+		} else
+		{
+			if (n != 0) {
+				int temp;
+				for (int i = 0; i < new_node->dydis; i++)
+				{
+					for (int j = i + 1; j < new_node->dydis; j++)
+
+					{
+						if (new_node->A[i] > new_node->A[j])
+						{
+							temp = new_node->A[i];
+							new_node->A[i] = new_node->A[j];
+							new_node->A[j] = temp;
+						}
+					}
+				}
+				if (new_node->dydis % 2 != 0)
+					new_node->mediana = new_node->A[new_node->dydis - 1];
+				else
+					new_node->mediana = (new_node->A[new_node->dydis / 2] + new_node->A[new_node->dydis / 2 - 1]) / 2;
+				new_node->galutinis = 0.4 * new_node->mediana + 0.6 * new_node->e;
+			}
+			else new_node->galutinis = 0.6 * new_node->e;
+		}
 	}
 
 
@@ -122,6 +210,8 @@ node* insert(node *&root) {
 		root = new node;
 		cout << "Iveskite studento varda" << endl;
 		cin >> root->vardas;
+		cin.clear();
+		cin.ignore(100, '\n');
 		while (cin.fail())
 		{
 			cin.clear();
@@ -138,54 +228,137 @@ node* insert(node *&root) {
 			cout << "Pavardes ivestyje padarete klaida, bandykite dar karta" << endl;
 			cin >> root->pavarde;
 		}
-		cout << "Iveskite namu darbu pazymius (nuo 1 iki 10), jei pazymiu nebera, iveskite 0" << endl;
-		bool Pazymiuivedimas = true;
-		int l; //response
-		int n = 0; //namu darbu pazymiu kiekis
-		while (Pazymiuivedimas = true)
-		{
-			cin >> l;
-			while (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
-				cin >> l;
-			}
-			if (l >= 1 && l <= 10)
-			{
-				root->prideti(l);
-				n++;
-			}
-			else
-			{
-				Pazymiuivedimas = false;
-				break;
-			}
-		}
-		cout << "Iveskite egzamino rezultata" << endl;
-		cin >> root->e;
-		while (cin.fail())
+		int r;
+		cout << "Ar norite kad pazymius uz jus? 1=taip 0=ne" << endl;
+		cin >> r;
+		cin.clear();
+		cin.ignore(100, '\n');
+		while (cin.fail() or r != 0 && r != 1)
 		{
 			cin.clear();
 			cin.ignore(100, '\n');
 			cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
+			cin >> r;
+		}
+
+		int n = 0; //namu darbu pazymiu kiekis
+		if (r == 0) {
+			cout << "Iveskite namu darbu pazymius (nuo 1 iki 10), jei pazymiu nebera, iveskite 0" << endl;
+			bool Pazymiuivedimas = true;
+			int l; //response
+			while (Pazymiuivedimas = true)
+			{
+				cin >> l;
+				cin.clear();
+				cin.ignore(100, '\n');
+				while (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(100, '\n');
+					cout << "Ivedete ne skaiciu (1-10), bandykite dar karta" << endl;
+					cin >> l;
+				}
+				if (l >= 1 && l <= 10)
+				{
+					root->prideti(l);
+					n++;
+				}
+				else
+				{
+					Pazymiuivedimas = false;
+					break;
+				}
+			}
+			cout << "Iveskite egzamino rezultata" << endl;
 			cin >> root->e;
+			cin.clear();
+			cin.ignore(100, '\n');
+			while (cin.fail() or root->e > 10 or root->e < 0)
+			{
+				cin.clear();
+				cin.ignore(100, '\n');
+				cout << "Ivedete ne skaiciu (0-10), bandykite dar karta" << endl;
+				cin  >> root->e;
+			}
+		} else
+		{
+			cout << "Kiek norite sugeneruoti namu darbu pazymiu (iki 1000000)?" << endl;
+			cin >> n;
+			cin.clear();
+			cin.ignore(100, '\n');
+			while (cin.fail() or n > 1000000)
+			{
+				cin.clear();
+				cin.ignore(100, '\n');
+				cout << "Ivedete ne skaiciu, bandykite dar karta" << endl;
+				cin >> n;
+				cin.clear();
+				cin.ignore(100, '\n');
+			}
+			root->dydis = n;
+			//Stephan T. Lavavej siulomas random library solution
+			std::random_device rd;
+			std::mt19937 mt(rd());
+			std::uniform_real_distribution<double> dist(1, 11);
+			for (int i = 0; i < n; i++)
+			{
+				root->prideti(round(dist(mt)));
+			}
+			root->e = round(dist(mt));
 		}
-		root->next = nullptr;
-		if (n != 0) {
-			root->suma = getSum(root->dydis, root->A);
-			root->galutinis = 0.4 * root->suma / n + 0.6 * root->e;
+		int c;
+		cout << "Jei norite isvesti studento vidurki, iveskite 1, jei mediana, iveskite 0" << endl;
+		cin >> c;
+		cin.clear();
+		cin.ignore(100, '\n');
+		while (cin.fail() or c != 0 && c != 1)
+		{
+			cin.clear();
+			cin.ignore(100, '\n');
+			cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
+			cin  >> c;
+			cin.clear();
+			cin.ignore(100, '\n');
 		}
-		else if (root->e != 0)
-			root->galutinis = 0.6 * root->e;
+		if (c == 1) {
+			if (n != 0)
+			{
+				root->suma = getSum(root->dydis, root->A);
+				root->galutinis = 0.4 * root->suma / n + 0.6 * root->e;
+			}
+			else root->galutinis = 0.6 * root->e;
+		}
 		else
-			root->galutinis = 0;
+
+		{
+			if (n != 0) {
+				int temp;
+				for (int i = 0; i < root->dydis; i++)
+				{
+					for (int j = i + 1; j < root->dydis; j++)
+
+					{
+						if (root->A[i] > root->A[j])
+						{
+							temp = root->A[i];
+							root->A[i] = root->A[j];
+							root->A[j] = temp;
+						}
+					}
+				}
+				if (root->dydis % 2 != 0)
+					root->mediana = root->A[(root->dydis - 1)];
+				else
+					root->mediana = (root->A[root->dydis / 2] + root->A[root->dydis / 2 - 1]) / 2;
+			}
+			root->galutinis = 0.4 * root->mediana + 0.6 * root->e;
+
+		}
 	}
 	return root;
 }
 
-void istrinti (node *root)
+void istrinti (node * root)
 {
 	node *temp;
 	int k = 0;
@@ -205,7 +378,7 @@ void istrinti (node *root)
 		t = temp;
 	}
 }
-int FindLongest(int a, node*root)
+int FindLongest(int a, node * root)
 {
 	int Pilgiausias = 8;
 	int Vilgiausias = 7;
@@ -226,39 +399,24 @@ int FindLongest(int a, node*root)
 	else	return Vilgiausias;
 }
 
-void isvedimas (node *root)
+void isvedimas (node * root)
 {
-	int a;
-	cout << "Jei norite isvesti studento vidurki, iveskite 1, jei mediana, iveskite 0" << endl;
-	cin >> a;
-	while (cin.fail() or a != 0 && a != 1)
-	{
-		cin.clear();
-		cin.ignore(100, '\n');
-		cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
-		cin >> a;
-	}
+
 	int Pilgis = FindLongest(1, root);
 	int Vilgis = FindLongest(0, root);
 	cout << setw(Pilgis + 3) << std::left << setfill(' ') << "Pavarde ";
 	cout << setw(Vilgis + 3) << std::left << setfill(' ') << "Vardas ";
-	if (a==1)
-	cout << "Galutinis vid. " << endl;
+	if (root->mediana == 0)
+		cout << "Galutinis vid. " << endl;
 	else cout << "Galutinis med. " << endl;
-	
+
 	string eilute(Pilgis + Vilgis + 20, '-');
 	cout << eilute << endl;
 	node *t = root;
 	while (t) {
 		cout << setw(Pilgis + 3) << std::left << setfill(' ') << t->pavarde;
 		cout << setw(Vilgis + 3) << std::left << setfill(' ') << t->vardas;
-		if (a==1)
 		cout << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << t->galutinis << endl;
-		else{
-		 std::sort(t->A,t->A+t->dydis);
-		 t->mediana=t->A[t->dydis/2];
-		 cout << setw(16) << std::left <<t->mediana<<endl;
-			}
 		t = t->next;
 	}
 }
@@ -268,18 +426,24 @@ main()
 	int a;
 	cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
 	cin >> a;
+	cin.clear();
+	cin.ignore(100, '\n');
 	while (cin.fail() or a != 0 && a != 1)
 	{
 		cin.clear();
 		cin.ignore(100, '\n');
 		cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
 		cin >> a;
+		cin.clear();
+		cin.ignore(100, '\n');
 	}
 	while (a == 1)
 	{
 		insert(root);
 		cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
 		cin >> a;
+		cin.clear();
+		cin.ignore(100, '\n');
 
 	}
 	isvedimas(root);
