@@ -223,7 +223,7 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 	fin >> input.vardas;
 	fin >> input.pavarde;
 	int k;
-	intput.v.reserve(10);
+	input.v.reserve(10);
 	while (fin.rdbuf()->in_avail() > 0)
 	{
 		fin >> k;
