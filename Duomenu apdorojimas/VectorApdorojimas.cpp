@@ -4,8 +4,6 @@
 #include <bits/stdc++.h>
 #include <algorithm>
 #include <random>
-#include <fstream>
-#include <sstream>
 using std::cout;
 using std::endl;
 using std::cin;
@@ -13,22 +11,19 @@ using std::string;
 using std::setw;
 using std::setfill;
 using std::vector;
-using std::getline;
-using std::ifstream;
-using std::istringstream;
+
 struct studentas {
 	string vardas;
 	string pavarde;
 	vector<int> v;
 	int e;
 	double galutinis;
-	double galutmed;
 	double mediana;
 
 	void Print(int Pilgis, int Vilgis) {
 		cout << setw(Pilgis + 3) << std::left << setfill(' ') << pavarde;
 		cout << setw(Vilgis + 3) << std::left << setfill(' ') << vardas;
-		cout << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << galutinis << galutmed << endl;
+		cout << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << galutinis << endl;
 	}
 	double getMedian()
 	{
@@ -38,10 +33,10 @@ struct studentas {
 				mediana = v[v.size() - 1];
 			else
 				mediana = (v[v.size() / 2] + v[v.size() / 2 - 1]) / 2;
-			galutmed = 0.4 * mediana + 0.6 * e;
+			galutinis = 0.4 * mediana + 0.6 * e;
 		}
-		else galutmed = 0.6 * e;
-		return galutmed;
+		else galutinis = 0.6 * e;
+		return galutinis;
 	}
 	double GetAverage()
 	{
@@ -168,16 +163,35 @@ void Input(vector<studentas> &studentai, int &Pilgis, int &Vilgis) {
 }
 void Printing(vector<studentas> &studentai, int Pilgis, int Vilgis)
 {
-
-	for (int i = 0; i < studentai.size(); i++)
+	int c;
+	cout << "Jei norite studentu vidurkiu iveskite 1, jei medianu 0" << endl;
+	cin >> c;
+	cin.clear();
+	cin.ignore(100, '\n');
+	while (cin.fail() or c != 0 && c != 1)
 	{
-		studentai[i].GetAverage();
-		studentai[i].getMedian();
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
+		cin >> c;
+	}
+	if (c == 1) {
+		for (int i = 0; i < studentai.size(); i++)
+		{
+			studentai[i].GetAverage();
+		}
+	} else
+	{
+		for (int i = 0; i < studentai.size(); i++)
+		{
+			studentai[i].getMedian();
+		}
 	}
 	cout << setw(Pilgis + 3) << std::left << setfill(' ') << "Pavarde ";
 	cout << setw(Vilgis + 3) << std::left << setfill(' ') << "Vardas ";
-	cout << setw(16) << std::left << setfill(' ') << "Galutinis vid. ";
-	cout << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
+	if (c == 1)
+		cout << "Galutinis vid. " << endl;
+	else cout << "Galutinis med. " << endl;
 	string eilute(Pilgis + Vilgis + 20, '-');
 	cout << eilute << endl;
 
@@ -186,113 +200,30 @@ void Printing(vector<studentas> &studentai, int Pilgis, int Vilgis)
 		studentai[i].Print(Pilgis, Vilgis);
 	}
 }
-bool compare_by_word(const studentas& lhs, const studentas& rhs) {
-    return lhs.pavarde < rhs.pavarde;
-}
-void FileRead(vector<studentas> &studentai, ifstream &file, int &Vilgis, int &Pilgis)
+int main()
 {
-	studentas input;
-	int n;
-		if (file.eof())
-			exit(EXIT_FAILURE);
-		string line;
-		getline(file, line);
-		istringstream fin(line);
-		fin >> input.vardas;
-		if (Vilgis < input.vardas.length())
-			Vilgis = input.vardas.length();
-		fin >> input.pavarde;
-		if (Pilgis < input.pavarde.length())
-			Vilgis = input.pavarde.length();
-		fin >> n;
-		int k;
-		for (int i = 0; i < n; i++) {
-			fin >> k;
-			
-			if (fin.fail())
-			{
-				fin.clear();
-				string dummy;
-				fin >> dummy;
-				continue;
-			}
-
-			if (k > 10 or k < 1) {
-				cout << "Duomenys ivesti neteisingai" << endl;
-				exit(EXIT_FAILURE);
-
-			}
-			input.v.push_back(k);
-
-		}
-		if (n != input.v.size())
-		{
-			cout << "Duomenys ivesti neteisingai" << endl;
-			exit(EXIT_FAILURE);
-		}
-		fin >> k;
-		input.e=k;
-	studentai.push_back(input);
-}
-	int main()
+	vector<studentas> studentai;
+	cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
+	int Pilgis = 7;
+	int Vilgis = 6;
+	int o = 0;
+	int a;
+	cin >> a;
+	while (cin.fail() or a != 0 && a != 1)
 	{
-		setlocale(LC_ALL, "Lithuanian");
-		vector<studentas> studentai;
-		cout << "Ar norite nuskaityti faila?1=taip 0=ne" << endl;
-		int f;
-		int Pilgis = 7;
-		int Vilgis = 6;
-		cin >> f;
-		while (cin.fail() or f != 0 && f != 1)
-		{
-			cin.clear();
-			cin.ignore(100, '\n');
-			cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
-			cin >> f;
-		}
-		if (f == 1)
-		{
-			cout << "Koks pilnas tekstinio failo pavadinimas?" << endl;
-			string pav;
-			cin >> pav;
-
-			while (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "Iveskit normalu pavadinima" << endl;
-				cin >> pav;
-			}
-			ifstream file (pav);
-				if (!file)
-				{
-				cout << "Failas neatsidare" << endl;
-				exit(EXIT_FAILURE);
-			}	while(!file.eof()){
-				FileRead(studentai, file, Pilgis, Vilgis);
-			}
-			
-		} if (f != 1) {
-			cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
-			int o = 0;
-			int a;
-			cin >> a;
-			while (cin.fail() or a != 0 && a != 1)
-			{
-				studentai.reserve(o + 1);
-				cin.clear();
-				cin.ignore(100, '\n');
-				cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
-				cin >> a;
-			}
-			while (a == 1)
-			{
-				Input(studentai, Pilgis, Vilgis);
-				cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
-				cin >> a;
-				o++;
-			}
-		}
-		std::sort(studentai.begin(), studentai.end(), compare_by_word);
-		Printing(studentai, Pilgis, Vilgis);
+		studentai.reserve(o + 1);
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "ivedete ne 1 arba 0, bandykite dar karta" << endl;
+		cin >> a;
 	}
+	while (a == 1)
+	{
+		Input(studentai, Pilgis, Vilgis);
+		cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
+		cin >> a;
+		o++;
+	}
+	Printing(studentai, Pilgis, Vilgis);
+	return 0;
+}
