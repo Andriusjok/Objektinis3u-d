@@ -22,7 +22,10 @@ struct studentas {
 	vector<int> v;
 	int e;
 	double galutinis;
+<<<<<<< HEAD
 	double galutmed;
+=======
+>>>>>>> a799c37f6e49cab8ce743f5bc426b73518004d96
 	double mediana;
 
 	void Print(int Pilgis, int Vilgis) {
@@ -234,6 +237,7 @@ void FileRead(vector<studentas> &studentai, ifstream &file, int &Vilgis, int &Pi
 }
 	int main()
 	{
+<<<<<<< HEAD
 		setlocale(LC_ALL, "Lithuanian");
 		vector<studentas> studentai;
 		cout << "Ar norite nuskaityti faila?1=taip 0=ne" << endl;
@@ -294,3 +298,12 @@ void FileRead(vector<studentas> &studentai, ifstream &file, int &Vilgis, int &Pi
 		std::sort(studentai.begin(), studentai.end(), compare_by_word);
 		Printing(studentai, Pilgis, Vilgis);
 	}
+=======
+		Input(studentai, Pilgis, Vilgis);
+		cout << "Jei norite irasyti studenta, iveskite 1, jei ne, iveskite 0" << endl;
+		cin >> a;
+		o++;
+	}
+	Printing(studentai, Pilgis, Vilgis);
+}
+>>>>>>> a799c37f6e49cab8ce743f5bc426b73518004d96
