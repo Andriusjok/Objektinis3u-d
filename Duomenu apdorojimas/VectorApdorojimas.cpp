@@ -18,7 +18,7 @@ struct studentas {
 	vector<int> v;
 	int e;
 	double galutinis;
-	int mediana;
+	double mediana;
 
 	void Print(int Pilgis, int Vilgis) {
 		cout << setw(Pilgis + 3) << std::left << setfill(' ') << pavarde;
