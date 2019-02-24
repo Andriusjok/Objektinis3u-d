@@ -28,7 +28,7 @@ Andrius Jokubauskas 2 4 5 6 9 9 9 5
 
 
 Makefile commands:
-#make
+# make
 Sukuria .o failus ir juos sulinkina i "main" faila.
-#clean
+# clean
 istrina main ir .o failus
