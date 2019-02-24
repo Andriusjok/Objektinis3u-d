@@ -1,6 +1,5 @@
-Andrius Jokubauskas 1 2 4 5 6
-Deividas Januska 2 5 7 8 9
-Emilis Baliukonis 2 6 9 7
-Matas Cenys 2 7 8 4 6 8
-Andrei jokubovski 9 2
-vardas pavarde 1 2 4 8 9 5 
+Andrius Jokubauskas 2 a 6 7 9
+Matas Cenys 1 4 5 8 9
+Kasparas Brazenas 2 5 8 9 9
+Deividas Januska 2 5 9 1 9
+Simonas Saltenis 2 5 2 4 3 3 3
