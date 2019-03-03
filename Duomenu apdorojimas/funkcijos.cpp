@@ -101,7 +101,7 @@ void Input(vector<studentas> &studentai) {
 		int u;
 		cout << "Kiek norite sugeneruoti namu darbu pazymiu (iki milijono)?" << endl;
 		cin >> u;
-		while (cin.fail() or u > 1000000)
+		while (cin.fail() or u > 1000000 or u < 0)
 		{
 			cin.clear();
 			cin.ignore(100, '\n');
@@ -109,7 +109,6 @@ void Input(vector<studentas> &studentai) {
 			cin >> u;
 		}
 		ivedimas.v.reserve(u);
-		//Stephan T. Lavavej siulomas random library solution
 		std::default_random_engine generator;
 		std::uniform_int_distribution<int> dist(1, 10);
 		for (int i = 0; i < u; i++)
@@ -144,6 +143,12 @@ void Printing(vector<studentas> &studentai, int &Pilgis, int &Vilgis)
 bool compare_by_word(const studentas& lhs, const studentas& rhs) {
 	return lhs.pavarde < rhs.pavarde;
 }
+bool compare_by_name(const studentas& lhs, const studentas& rhs) {
+	return lhs.vardas < rhs.vardas;
+}
+bool compare_by_grades( studentas& lhs, studentas& rhs) {
+	return lhs.galutinis < rhs.galutinis;
+}
 void FindLongest(vector<studentas> &input, int &Vilgis, int &Pilgis)
 {
 	for (int i = 0; i < input.size(); i++)
@@ -152,6 +157,26 @@ void FindLongest(vector<studentas> &input, int &Vilgis, int &Pilgis)
 			Vilgis = input[i].vardas.length();
 		if (Pilgis < input[i].pavarde.length())
 			Pilgis = input[i].pavarde.length();
+	}
+}
+void Generavimas(int r, int e, Timer& t)
+{	std::default_random_engine generator;
+	std::uniform_int_distribution<int> dist(1, 10);
+	std::uniform_int_distribution<int> Ndist(1, 100000);
+	std::ofstream file ("kursiokai.txt");
+
+	std::string vardas = "Vardas";
+	std::string pavarde = "Pavarde";
+	for (int i = 0; i < r; i++)
+	{
+		file << vardas << Ndist(generator) << " " << pavarde << Ndist(generator) << " ";
+		for (int j = 0; j < e; j++)
+		{
+			file << dist(generator) << " ";
+		}
+		file << dist(generator);
+		if (i != r - 1)
+			file << std::endl;
 	}
 }
 void FileRead(vector<studentas> &studentai, ifstream &file)
@@ -166,19 +191,8 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 	fin >> input.pavarde;
 	int k;
 	input.v.reserve(10);
-	while (fin.rdbuf()->in_avail() > 0)
+	while (fin >> k)
 	{
-		fin >> k;
-		if (fin.fail())
-		{
-			if (file.eof())
-				break;
-			cout << "Praleistas netinkamas simbolis" << endl;
-			fin.clear();
-			string dummy;
-			fin >> dummy;
-			continue;
-		}
 		if (k > 10 or k < 0) {
 			cout << "Pazymiai neteisingai ivesti faile" << endl;
 			exit(EXIT_FAILURE);
@@ -187,6 +201,7 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 		input.v.push_back(k);
 
 	}
+
 	input.e = input.v.back();
 	input.v.pop_back();
 	studentai.push_back(input);
@@ -211,15 +226,15 @@ void Interface(vector<studentas> &studentai)
 		try {
 			ifstream file (pav);
 			while (!file.eof())
-				{
-					FileRead(studentai, file);
-				}
-		
+			{
+				FileRead(studentai, file);
+			}
+
 		}
 		catch (const std::exception &exc)
 		{
 
-			std::cerr <<"ERROR:"<< exc.what()<<" Nepavyko atidaryti failo ";
+			std::cerr << "ERROR:" << exc.what() << " Nepavyko atidaryti failo arba failas neatitinka formato ";
 			std::exit(EXIT_FAILURE);
 		}
 
@@ -235,4 +250,97 @@ void Interface(vector<studentas> &studentai)
 			o++;
 		}
 	}
+}
+void VectorSplit(vector <studentas> &studentai, int &b, int& Vilgis, int& Pilgis)
+{
+	if (b == 1)
+		for (int i = 0; i < studentai.size(); i++)
+		{
+			studentai[i].GetAverage();
+			studentai[i].getMedian();
+		}
+
+	std::sort(studentai.begin(), studentai.end(), compare_by_grades);
+	int n = 0;
+	if (b == 1) {
+		for (int i = 0; i < studentai.size(); i++)
+		{	if (studentai[i].galutinis < 5)
+				n++;
+		}
+	} else {
+		for (int i = 0; i < studentai.size(); i++)
+		{	if (studentai[i].galutmed < 5)
+				n++;
+		}
+	}
+	
+
+	std::ofstream failas("vargsiukai.txt");
+	failas << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
+	failas << setw(Vilgis + 6) << std::left << setfill(' ') << "Vardas ";
+	failas << setw(16) << std::left << setfill(' ') << "Galutinis vid. ";
+	failas << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
+	string eilute(Pilgis + Vilgis + 40, '-');
+	failas << eilute << endl;
+	for (int i = 0; i < n; i++) {
+		failas << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
+		failas << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
+		failas << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
+	}
+	std::ofstream failas1 ("kietekai.txt");
+	failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
+	failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << "Vardas ";
+	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis vid. ";
+	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
+	string eilute1(Pilgis + Vilgis + 40, '-');
+	failas1 << eilute1 << endl;
+	for (int i = n; i < studentai.size(); i++)
+	{
+		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
+		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
+		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
+	}
+}
+void SpartosAnalize(vector<studentas> &studentai)
+{
+	int Pilgis = 7;
+	int Vilgis = 6;
+	cout << "Kiek norite sugeneruoti studentu (iki 10m)?" << endl;
+	int r;
+	cin >> r;
+	while (cin.fail() or r > 10000000 or r < 0)
+	{
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "Ivedete netinkama skaiciu, bandykite dar karta" << endl;
+		cin >> r;
+	}
+	cin.clear();
+	cin.ignore(100, '\n');
+	cout << "Kiek norite studentams sugeneruoti pazymiu?(iki 100)" << endl;
+	int e;
+	cin >> e;
+	while (cin.fail() or e > 100 or e < 0)
+	{
+		cin.clear();
+		cin.ignore(100, '\n');
+		cout << "Ivedete netinkama skaiciu, bandykite dar karta" << endl;
+		cin >> e;
+	}
+
+	cin.clear();
+	cin.ignore(100, '\n');
+	cout << "Ar norite skaiciuoti vargsiukus ir kietekus pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
+	int b = CinFail(0);
+	cout << "Pradedamas matuoti laikas" << endl;
+	Timer t;
+	Generavimas(r, e, t);
+	ifstream file ("kursiokai.txt");
+	while (!file.eof())
+	{
+		FileRead(studentai, file);
+	}
+	FindLongest(studentai, Vilgis, Pilgis);
+	VectorSplit(studentai, b, Vilgis, Pilgis);
+	cout << "Praejo " << t.elapsed() << " s" << endl;
 }

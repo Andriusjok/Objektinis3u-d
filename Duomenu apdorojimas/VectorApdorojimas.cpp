@@ -6,17 +6,36 @@ int CinDecimal(int e);
 void Input(vector<studentas> &studentai);
 void Printing(vector<studentas> &studentai, int &Pilgis, int &Vilgis);
 bool compare_by_word(const studentas& lhs, const studentas& rhs);
+bool compare_by_name(const studentas& lhs, const studentas& rhs);
+bool compare_by_grades( studentas& lhs, studentas& rhs);
 void FindLongest(vector<studentas> &input, int &Vilgis, int &Pilgis);
+void Generavimas(int r, int e);
 void FileRead(vector<studentas> &studentai, ifstream &file);
 void Interface(vector<studentas> &studentai);
+void SpartosAnalize(vector<studentas> &studentai);
+void VectorSplit(vector <studentas> &studentai, int &b, int &k, int Vilgis, int Pilgis);
 int main()
 {
-	int Pilgis = 7;
-	int Vilgis = 6;
+	int r;
+	cout << "Ar norite vykdyti 0.4 (Spartos analize) ar ankstesnes versijas?" << endl;
+	cout << "1-spartos analize 0 -ankstesnes " << endl;
+	r = CinFail(0);
 	vector<studentas> studentai;
-	Interface(studentai);
-	FindLongest(studentai,Vilgis,Pilgis);
-	std::sort(studentai.begin(), studentai.end(), compare_by_word);
-	Printing(studentai, Pilgis, Vilgis);
-
+	if (r == 1)
+	{
+		SpartosAnalize(studentai);
+	}
+	else {
+		int Pilgis = 7;
+		int Vilgis = 6;
+		Interface(studentai);
+		cout << "Spauskite 1 jei norite rikiuoti pagal vardus, spauskite 0 jei norite rikiuoti pagal pavardes" << endl;
+		r = CinFail(0);
+		FindLongest(studentai, Vilgis, Pilgis);
+		if (r == 0)
+			std::sort(studentai.begin(), studentai.end(), compare_by_word);
+		else
+			std::sort(studentai.begin(), studentai.end(), compare_by_name);
+		Printing(studentai, Pilgis, Vilgis);
+	}
 }

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <exception>
+#include <chrono>
 using std::cout;
 using std::endl;
 using std::cin;
@@ -56,5 +57,20 @@ struct studentas
 		else
 			galutinis = 0.6 * e;
 		return galutinis;
+	}
+};
+class Timer {
+private:
+  // panaudojame using
+  using hrClock = std::chrono::high_resolution_clock;
+  using durationDouble = std::chrono::duration<double>;
+  std::chrono::time_point<hrClock> start;
+public:
+	Timer() : start{ hrClock::now() } {}
+	void reset() {
+		start = hrClock::now();
+	}
+	double elapsed() const {
+		return durationDouble (hrClock::now() - start).count();
 	}
 };
