@@ -1,7 +1,7 @@
 # Objektinis Programavimas
 
 
-## Antra uûduotis
+## Antra u≈æduotis
 
 
 ### [v0.4](https://github.com/Andriusjok/ObjekProg/releases/tag/Ver0.4) - (2019-02-24)
@@ -17,6 +17,7 @@
 
 
 ## V0.2 failo formatas
+Mano programoje nenaudojama pirma eilute su "nd1 nd2 nd3"
 
 Vardas Pavarde nd nd nd nd ... Egzaminas
 
@@ -29,7 +30,7 @@ Andrius Jokubauskas 2 4 5 6 9 9 9 5
 
 ------------------------------------------------------------
 Makefile commands:
-##make
+## make
 Sukuria .o failus ir juos sulinkina i "main" faila.
-##clean
+## clean
 istrina main ir .o failus
