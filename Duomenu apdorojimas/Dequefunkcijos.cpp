@@ -1,4 +1,4 @@
-#include "header.h"
+#include "Dequeheader.h"
 int ErrorFun(int nr)
 {
 	if (nr == 0)
@@ -50,7 +50,7 @@ int CinDecimal(int e)
 	return f;
 
 }
-void Input(vector<studentas> &studentai) {
+void Input(deque<studentas> &studentai) {
 	studentas ivedimas;
 	cout << "Iveskite Studento varda" << endl;
 	cin >> ivedimas.vardas;
@@ -121,7 +121,7 @@ void Input(vector<studentas> &studentai) {
 	studentai.push_back(ivedimas);
 
 }
-void Printing(vector<studentas> &studentai, unsigned int &Pilgis, unsigned int &Vilgis)
+void Printing(deque<studentas> &studentai, unsigned int &Pilgis, unsigned int &Vilgis)
 {
 
 	for (size_t i = 0; i < studentai.size(); i++)
@@ -150,7 +150,7 @@ bool compare_by_name(const studentas& lhs, const studentas& rhs) {
 bool compare_by_grades(studentas& lhs, studentas& rhs) {
 	return lhs.galutinis < rhs.galutinis;
 }
-void FindLongest(vector<studentas> &input, unsigned int &Vilgis, unsigned int &Pilgis)
+void FindLongest(deque<studentas> &input, unsigned int &Vilgis, unsigned int &Pilgis)
 {
 	for (size_t i = 0; i < input.size(); i++)
 	{
@@ -181,7 +181,7 @@ void Generavimas(int r, int e, Timer& t)
 			file << std::endl;
 	}
 }
-void FileRead(vector<studentas> &studentai, ifstream &file)
+void FileRead(deque<studentas> &studentai, ifstream &file)
 {
 	studentas input;
 	if (file.eof())
@@ -208,7 +208,7 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 	input.v.pop_back();
 	studentai.push_back(input);
 }
-void Interface(vector<studentas> &studentai)
+void Interface(deque<studentas> &studentai)
 {
 	cout << "Ar norite nuskaityti faila?1=taip 0=ne" << endl;
 	int f = CinFail(0);
@@ -254,7 +254,7 @@ void Interface(vector<studentas> &studentai)
 		}
 	}
 }
-void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, unsigned int &Pilgis)
+void dequeSplit(deque <studentas> &studentai, int &b, unsigned int &Vilgis, unsigned int &Pilgis)
 {
 	for (size_t i = 0; i < studentai.size(); i++)
 	{
@@ -306,11 +306,11 @@ void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, un
 		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
 	}
 }
-void SpartosAnalize(vector<studentas> &studentai)
+void SpartosAnalize(deque<studentas> &studentai)
 {
 	unsigned int Pilgis = 7;
 	unsigned int Vilgis = 6;
-		cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
+	cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
 	int b = CinFail(0);
 	string pav;
 	cout<<"Iveskite studentu failo pavadinima"<<endl;
@@ -329,6 +329,6 @@ void SpartosAnalize(vector<studentas> &studentai)
 		FileRead(studentai, file);
 	}
 	FindLongest(studentai, Vilgis, Pilgis);
-	vectorSplit(studentai, b, Vilgis, Pilgis);
+	dequeSplit(studentai, b, Vilgis, Pilgis);
 	cout << "Praejo " << t.elapsed() << " s" << endl;
 }

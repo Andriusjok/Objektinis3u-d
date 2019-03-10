@@ -1,4 +1,4 @@
-#include "header.h"
+#include "listheader.h"
 int ErrorFun(int nr)
 {
 	if (nr == 0)
@@ -50,7 +50,7 @@ int CinDecimal(int e)
 	return f;
 
 }
-void Input(vector<studentas> &studentai) {
+void Input(list<studentas> &studentai) {
 	studentas ivedimas;
 	cout << "Iveskite Studento varda" << endl;
 	cin >> ivedimas.vardas;
@@ -121,13 +121,13 @@ void Input(vector<studentas> &studentai) {
 	studentai.push_back(ivedimas);
 
 }
-void Printing(vector<studentas> &studentai, unsigned int &Pilgis, unsigned int &Vilgis)
+void Printing(list<studentas> &studentai, unsigned int &Pilgis, unsigned int &Vilgis)
 {
-
-	for (size_t i = 0; i < studentai.size(); i++)
+	for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 	{
-		studentai[i].GetAverage();
-		studentai[i].getMedian();
+
+		(*it).GetAverage();
+		(*it).getMedian();
 	}
 	cout << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
 	cout << setw(Vilgis + 6) << std::left << setfill(' ') << "Vardas ";
@@ -135,10 +135,9 @@ void Printing(vector<studentas> &studentai, unsigned int &Pilgis, unsigned int &
 	cout << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute(Pilgis + Vilgis + 40, '-');
 	cout << eilute << endl;
-
-	for (size_t i = 0; i < studentai.size(); i++)
+	for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 	{
-		studentai[i].Print(Pilgis, Vilgis);
+		(*it).Print(Pilgis, Vilgis);
 	}
 }
 bool compare_by_word(const studentas& lhs, const studentas& rhs) {
@@ -150,14 +149,14 @@ bool compare_by_name(const studentas& lhs, const studentas& rhs) {
 bool compare_by_grades(studentas& lhs, studentas& rhs) {
 	return lhs.galutinis < rhs.galutinis;
 }
-void FindLongest(vector<studentas> &input, unsigned int &Vilgis, unsigned int &Pilgis)
+void FindLongest(list<studentas> &input, unsigned int &Vilgis, unsigned int &Pilgis)
 {
-	for (size_t i = 0; i < input.size(); i++)
+	for (list<studentas>::iterator it = input.begin(); it != input.end(); ++it)
 	{
-		if (Vilgis < input[i].vardas.length())
-			Vilgis = input[i].vardas.length();
-		if (Pilgis < input[i].pavarde.length())
-			Pilgis = input[i].pavarde.length();
+		if (Vilgis < (*it).vardas.length())
+			Vilgis = (*it).vardas.length();
+		if (Pilgis < (*it).pavarde.length())
+			Pilgis = (*it).pavarde.length();
 	}
 }
 void Generavimas(int r, int e, Timer& t)
@@ -181,7 +180,7 @@ void Generavimas(int r, int e, Timer& t)
 			file << std::endl;
 	}
 }
-void FileRead(vector<studentas> &studentai, ifstream &file)
+void FileRead(list<studentas> &studentai, ifstream &file)
 {
 	studentas input;
 	if (file.eof())
@@ -208,7 +207,7 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 	input.v.pop_back();
 	studentai.push_back(input);
 }
-void Interface(vector<studentas> &studentai)
+void Interface(list<studentas> &studentai)
 {
 	cout << "Ar norite nuskaityti faila?1=taip 0=ne" << endl;
 	int f = CinFail(0);
@@ -254,28 +253,30 @@ void Interface(vector<studentas> &studentai)
 		}
 	}
 }
-void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, unsigned int &Pilgis)
+void VectorSplit(list <studentas> &studentai, int &b, unsigned int& Vilgis,unsigned int& Pilgis)
 {
-	for (size_t i = 0; i < studentai.size(); i++)
+	for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 	{
-		studentai[i].GetAverage();
-		studentai[i].getMedian();
+
+		(*it).GetAverage();
+		(*it).getMedian();
 	}
 
-	std::sort(studentai.begin(), studentai.end(), compare_by_grades);
+	studentai.sort(compare_by_grades);
 	int n = 0;
 	if (b == 1) {
-		for (size_t i = 0; i < studentai.size(); i++)
+		for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 		{
-			if (studentai[i].galutinis < 5)
+			if ((*it).galutinis < 5)
 				n++;
 		}
 	}
 	else {
-		for (size_t i = 0; i < studentai.size(); i++)
+		for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 		{
-			if (studentai[i].galutmed < 5)
+			if ((*it).galutmed < 5)
 				n++;
+
 		}
 	}
 
@@ -287,10 +288,12 @@ void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, un
 	failas << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute(Pilgis + Vilgis + 40, '-');
 	failas << eilute << endl;
-	for (int i = 0; i < n; i++) {
-		failas << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
-		failas << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
-		failas << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
+	list<studentas>::iterator itmax = studentai.begin();
+	std::advance(itmax, n);
+	for (list<studentas>::iterator it = studentai.begin(); it != itmax; ++it) {
+		failas << setw(Pilgis + 6) << std::left << setfill(' ') << (*it).pavarde;
+		failas << setw(Vilgis + 6) << std::left << setfill(' ') << (*it).vardas;
+		failas << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << (*it).galutinis << (*it).galutmed << endl;
 	}
 	std::ofstream failas1("kietekai.txt");
 	failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
@@ -299,14 +302,14 @@ void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, un
 	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute1(Pilgis + Vilgis + 40, '-');
 	failas1 << eilute1 << endl;
-	for (size_t i = n; i < studentai.size(); i++)
+	for (list<studentas>::iterator it = itmax++; it != studentai.end(); ++it)
 	{
-		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
-		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
-		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
+		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << (*it).pavarde;
+		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << (*it).vardas;
+		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << (*it).galutinis << (*it).galutmed << endl;
 	}
 }
-void SpartosAnalize(vector<studentas> &studentai)
+void SpartosAnalize(list<studentas> &studentai)
 {
 	unsigned int Pilgis = 7;
 	unsigned int Vilgis = 6;
@@ -329,6 +332,6 @@ void SpartosAnalize(vector<studentas> &studentai)
 		FileRead(studentai, file);
 	}
 	FindLongest(studentai, Vilgis, Pilgis);
-	vectorSplit(studentai, b, Vilgis, Pilgis);
+	VectorSplit(studentai, b, Vilgis, Pilgis);
 	cout << "Praejo " << t.elapsed() << " s" << endl;
 }
