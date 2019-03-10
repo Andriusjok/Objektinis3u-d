@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <bits/stdc++.h>
+#include <vector>
 #include <algorithm>
 #include <random>
 #include <fstream>
@@ -28,7 +28,7 @@ struct studentas
 	double galutmed;
 	double mediana;
 
-	void Print(int &Pilgis, int &Vilgis) {
+	void Print(unsigned int &Pilgis,unsigned int &Vilgis) {
 		cout << setw(Pilgis + 6) << std::left << setfill(' ') << pavarde;
 		cout << setw(Vilgis + 6) << std::left << setfill(' ') << vardas;
 		cout << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << galutinis << galutmed << endl;
@@ -59,6 +59,7 @@ struct studentas
 		return galutinis;
 	}
 };
+
 class Timer {
 private:
   // panaudojame using
