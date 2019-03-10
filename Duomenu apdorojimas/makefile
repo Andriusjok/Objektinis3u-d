@@ -8,4 +8,4 @@ List: ListApdorojimas.o Listfunkcijos.o
 GenerateFile: SarasoGen.o
 	$(CC) -o GenerateFile SarasoGen.o
 clean:
-	rm *.o Vector Deque List *.txt
+	rm *.o *.exe *.txt
