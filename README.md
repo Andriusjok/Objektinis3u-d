@@ -3,7 +3,7 @@
 
 ## Antra užduotis
 
-### [v0.5](https://github.com/Andriusjok/ObjekProg/releases/tag/Ver0.5) - (2019-03-10) 
+### [v0.5](https://github.com/Andriusjok/ObjekProg/releases/tag/Versija0.5) - (2019-03-10) 
 ### [v0.4](https://github.com/Andriusjok/ObjekProg/releases/tag/Ver0.4) - (2019-03-03) 
 ### [v0.3](https://github.com/Andriusjok/ObjekProg/releases/tag/v0.3) - (2019-02-24)
 ### [v0.2](https://github.com/Andriusjok/ObjekProg/releases/tag/V0.2E) - (2019-02-17)
@@ -78,7 +78,8 @@ List: ListApdorojimas.o Listfunkcijos.o
 GenerateFile: SarasoGen.o
 	$(CC) -o GenerateFile SarasoGen.o
 clean:
-	rm *.o Vector Deque List *.txt
+	rm *.o *.exe *.txt
+
 ```
 * Vector - sukuria exe file realizacijai su vektorium
 * Deque - sukuria exe file realizacijai su deque
