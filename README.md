@@ -14,21 +14,15 @@
 # Link
 [Reikalavimai](https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis)
 
+[0.5 Dokumentacija](#versijos-0.5-analize)
 
 
 ## V0.2 failo formatas
 Mano programoje nenaudojama pirma eilute su "nd1 nd2 nd3"
-
 Vardas Pavarde nd nd nd nd ... Egzaminas
-
-
------------------------------------------------------------
-
-
+```
 Andrius Jokubauskas 2 4 5 6 9 9 9 5
-
-
-------------------------------------------------------------
+```
 Makefile commands:
 ## make
 Sukuria .o failus ir juos sulinkina i "main" faila.
