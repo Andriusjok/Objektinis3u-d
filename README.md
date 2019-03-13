@@ -63,7 +63,7 @@ istrina main ir .o failus
 * List 4.33561 s
 * Deque 4.52401 s
 # 1m studentu 20 pazymiu
-* Vector 34.7257 s
+* Vector 21.7257 s
 * List 21.8868 s
 * Deque 20.3454 s
 ## 0.5 Makefile guide
