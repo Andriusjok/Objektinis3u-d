@@ -66,3 +66,22 @@ istrina main ir .o failus
 * Vector 34.7257 s
 * List 21.8868 s
 * Deque 20.3454 s
+## 0.5 Makefile guide
+```
+CC=g++
+Vector: VectorApdorjimas.o funkcijos.o
+	$(CC) -o Vector VectorApdorjimas.o funkcijos.o
+Deque: DeQueApdorojimas.o Dequefunkcijos.o
+	$(CC) -o Deque DeQueApdorjimas.o Dequefunkcijos.o
+List: ListApdorojimas.o Listfunkcijos.o
+	$(CC) -o List ListApdorojimas.o Listfunkcijos.o
+GenerateFile: SarasoGen.o
+	$(CC) -o GenerateFile SarasoGen.o
+clean:
+	rm *.o Vector Deque List *.txt
+```
+* Vector - sukuria exe file realizacijai su vektorium
+* Deque - sukuria exe file realizacijai su deque
+* List - sukuria exe file realizacijai su list
+* GenerateFile sukuria exe file .txt file generavimui
+* clean isvalo .exe ir .o failus
