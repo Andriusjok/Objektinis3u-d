@@ -34,3 +34,15 @@ Makefile commands:
 Sukuria .o failus ir juos sulinkina i "main" faila.
 ## clean
 istrina main ir .o failus
+## V0.4 Rezultatai
+------------------------------------------------------------
+10 studentu 10 pazymiu
+![Rezultatai](https://imgur.com/NtDT2Pt)
+100 studentu 10 pazymiu
+![Rezultatai](https://imgur.com/2vzIuVk)
+1000 studentu 10 pazymiu
+![Rezultatai](https://imgur.com/OwsLf6q)
+10000 studentu 10 pazymiu
+![Rezultatai](https://imgur.com/p60f2w5)
+100000 studentu 10 pazymiu
+![Rezultatai](https://imgur.com/N6JooRr)
