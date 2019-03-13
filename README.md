@@ -14,7 +14,7 @@
 # Link
 [Reikalavimai](https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis)
 
-[0.5 Dokumentacija](#versijos-0.5-analize)
+[0.5 Dokumentacija](#user-content-versijos-05-analize)
 
 
 ## V0.2 failo formatas
