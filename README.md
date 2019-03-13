@@ -4,7 +4,7 @@
 ## Antra užduotis
 
 
-### [v0.4](https://github.com/Andriusjok/ObjekProg/releases/tag/Ver0.4) - (2019-03-03)
+### [v0.4](https://github.com/Andriusjok/ObjekProg/releases/tag/Ver0.4F) - (2019-03-03)
 ### [v0.3](https://github.com/Andriusjok/ObjekProg/releases/tag/v0.3) - (2019-02-24)
 ### [v0.2](https://github.com/Andriusjok/ObjekProg/releases/tag/V0.2E) - (2019-02-17)
 
