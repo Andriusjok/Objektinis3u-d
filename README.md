@@ -37,12 +37,12 @@ istrina main ir .o failus
 ## V0.4 Rezultatai
 ------------------------------------------------------------
 10 studentu 10 pazymiu
-![Rezultatai](https://imgur.com/NtDT2Pt)
+![Rezultatai](https://i.imgur.com/eR9Ch3D.png)
 100 studentu 10 pazymiu
-![Rezultatai](https://imgur.com/2vzIuVk)
+![Rezultatai](https://i.imgur.com/3PjcBh6.png)
 1000 studentu 10 pazymiu
-![Rezultatai](https://imgur.com/OwsLf6q)
+![Rezultatai](https://i.imgur.com/nmrE4hJ.png)
 10000 studentu 10 pazymiu
-![Rezultatai](https://imgur.com/p60f2w5)
+![Rezultatai](https://i.imgur.com/kqrcstP.png)
 100000 studentu 10 pazymiu
-![Rezultatai](https://imgur.com/N6JooRr)
+![Rezultatai](https://i.imgur.com/W0WxAto.png)
