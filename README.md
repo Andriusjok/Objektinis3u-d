@@ -2,6 +2,7 @@
 
 
 ## Antra užduotis
+### [v1.0 optimizuota antra strategija](https://github.com/Andriusjok/ObjekProg/releases/tag/V1.0.optimizuota) - (2019-03-24)
 ### [v1.0 antra strategija](https://github.com/Andriusjok/ObjekProg/releases/tag/V1.02Strat) - (2019-03-24) 
 ### [v1.0 pirma strategija](https://github.com/Andriusjok/ObjekProg/releases/tag/V1_pirma_strat) - (2019-03-24)  
 ### [v0.5](https://github.com/Andriusjok/ObjekProg/releases/tag/Version0.5) - (2019-03-10) 
