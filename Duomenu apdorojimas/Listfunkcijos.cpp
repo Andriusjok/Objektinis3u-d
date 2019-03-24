@@ -102,33 +102,34 @@ void VectorSplit(list <studentas> &studentai, int &b, unsigned int& Vilgis,unsig
 {
 	for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 	{
-
 		(*it).GetAverage();
 		(*it).getMedian();
 	}
-	list<studentas> kietekas;
 	list<studentas> vargsiukas;
-	int n = 0;
 	if (b == 1) {
-		for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
+		list<studentas>::iterator it = studentai.begin();
+		while (it != studentai.end())
 		{
-			if ((*it).galutinis < 5)
+			if ((*it).galutinis < 5) {
 				vargsiukas.push_back(*it);
-			else
-				kietekas.push_back(*it);
+				it = studentai.erase(it);
+			}
+			else it++;
 		}
 	}
 	else {
-		for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
+		list<studentas>::iterator it = studentai.begin();
+		while (it != studentai.end())
 		{
-			if ((*it).galutmed < 5)
+			if ((*it).galutmed < 5) {
 				vargsiukas.push_back(*it);
-			else
-				kietekas.push_back(*it);
+				it = studentai.erase(it);
+			}
+			else it++;
 		}
 	}
 
-	kietekas.sort(compare_by_word);
+	studentai.sort(compare_by_word);
 	vargsiukas.sort(compare_by_word);
 	std::ofstream failas("vargsiukai.txt");
 	failas << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
@@ -149,7 +150,7 @@ void VectorSplit(list <studentas> &studentai, int &b, unsigned int& Vilgis,unsig
 	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute1(Pilgis + Vilgis + 40, '-');
 	failas1 << eilute1 << endl;
-	for (list<studentas>::iterator it = kietekas.begin(); it != kietekas.end(); ++it)
+	for (list<studentas>::iterator it = studentai.begin(); it != studentai.end(); ++it)
 	{
 		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << (*it).pavarde;
 		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << (*it).vardas;
@@ -160,18 +161,18 @@ void SpartosAnalize(list<studentas> &studentai)
 {
 	unsigned int Pilgis = 7;
 	unsigned int Vilgis = 6;
-		cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
+	cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
 	int b = CinFail(0);
 	string pav;
-	cout<<"Iveskite studentu failo pavadinima"<<endl;
-	cin>>pav;
+	cout << "Iveskite studentu failo pavadinima" << endl;
+	cin >> pav;
 	cout << "Pradedamas matuoti laikas" << endl;
 	Timer t;
-	
+
 	ifstream file(pav);
-	if(!file)
+	if (!file)
 	{
-		cout<<"Pavadinimas ivestas neteisingai"<<endl;
+		cout << "Pavadinimas ivestas neteisingai" << endl;
 		exit(EXIT_FAILURE);
 	}
 	while (!file.eof())

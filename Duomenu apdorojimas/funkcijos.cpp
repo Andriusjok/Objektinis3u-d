@@ -62,7 +62,7 @@ bool compare_by_grades(studentas& lhs, studentas& rhs) {
 }
 void FindLongest(vector<studentas> &input, unsigned int &Vilgis, unsigned int &Pilgis)
 {
-	for (size_t i = 0; i < input.size(); i++)
+	for (auto i = 0; i < input.size(); i++)
 	{
 		if (Vilgis < input[i].vardas.length())
 			Vilgis = input[i].vardas.length();
@@ -80,7 +80,7 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 	istringstream fin(line);
 	fin >> input.vardas;
 	fin >> input.pavarde;
-	int k;	
+	int k;
 	input.v.reserve(10);
 	while (fin >> k)
 	{
@@ -99,34 +99,36 @@ void FileRead(vector<studentas> &studentai, ifstream &file)
 }
 void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, unsigned int &Pilgis)
 {
-	for (size_t i = 0; i < studentai.size(); i++)
+	for (auto i = 0; i < studentai.size(); i++)
 	{
 		studentai[i].GetAverage();
 		studentai[i].getMedian();
 	}
-vector<studentas> kietekas;
-vector<studentas> vargsiukas;
+	vector<studentas> vargsiukas;
 	if (b == 1) {
-		for (size_t i = 0; i < studentai.size(); i++)
+		for (auto i = 0; i < studentai.size(); i++)
 		{
 			if (studentai[i].galutinis < 5)
+			{
 				vargsiukas.push_back(studentai[i]);
-		 	else
-		 		kietekas.push_back(studentai[i]);
+				studentai.erase(studentai.begin() + i);
+			}
 		}
+
 	}
 	else {
-		for (size_t i = 0; i < studentai.size(); i++)
+		for (auto i = 0; i < studentai.size(); i++)
 		{
 			if (studentai[i].galutmed < 5)
+			{
 				vargsiukas.push_back(studentai[i]);
-			else
-				kietekas.push_back(studentai[i]);
+				studentai.erase(studentai.begin() + i);
+			}
 		}
 	}
-	std::sort(kietekas.begin(),kietekas.end(),compare_by_word);
+	std::sort(studentai.begin(), studentai.end(), compare_by_word);
+	std::sort(vargsiukas.begin(), vargsiukas.end(), compare_by_word);
 
-	std::sort(vargsiukas.begin(),vargsiukas.end(),compare_by_word);
 	std::ofstream failas("vargsiukai.txt");
 	failas << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
 	failas << setw(Vilgis + 6) << std::left << setfill(' ') << "Vardas ";
@@ -134,7 +136,7 @@ vector<studentas> vargsiukas;
 	failas << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute(Pilgis + Vilgis + 40, '-');
 	failas << eilute << endl;
-	for (size_t i = 0; i < vargsiukas.size(); i++) {
+	for (auto i = 0; i < vargsiukas.size(); i++) {
 		failas << setw(Pilgis + 6) << std::left << setfill(' ') << vargsiukas[i].pavarde;
 		failas << setw(Vilgis + 6) << std::left << setfill(' ') << vargsiukas[i].vardas;
 		failas << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << vargsiukas[i].galutinis << vargsiukas[i].galutmed << endl;
@@ -146,29 +148,29 @@ vector<studentas> vargsiukas;
 	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute1(Pilgis + Vilgis + 40, '-');
 	failas1 << eilute1 << endl;
-	for (size_t i = 0; i < kietekas.size(); i++)
+	for (auto i = 0; i < studentai.size(); i++)
 	{
-		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << kietekas[i].pavarde;
-		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << kietekas[i].vardas;
-		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << kietekas[i].galutinis << kietekas[i].galutmed << endl;
+		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
+		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
+		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
 	}
 }
 void SpartosAnalize(vector<studentas> &studentai)
 {
 	unsigned int Pilgis = 7;
 	unsigned int Vilgis = 6;
-		cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
+	cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
 	int b = CinFail(0);
 	string pav;
-	cout<<"Iveskite studentu failo pavadinima"<<endl;
-	cin>>pav;
+	cout << "Iveskite studentu failo pavadinima" << endl;
+	cin >> pav;
 	cout << "Pradedamas matuoti laikas" << endl;
 	Timer t;
-	
+
 	ifstream file(pav);
-	if(!file)
+	if (!file)
 	{
-		cout<<"Pavadinimas ivestas neteisingai"<<endl;
+		cout << "Pavadinimas ivestas neteisingai" << endl;
 		exit(EXIT_FAILURE);
 	}
 	while (!file.eof())

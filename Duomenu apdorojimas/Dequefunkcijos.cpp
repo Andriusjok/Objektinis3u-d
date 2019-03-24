@@ -80,7 +80,7 @@ void FileRead(deque<studentas> &studentai, ifstream &file)
 	istringstream fin(line);
 	fin >> input.vardas;
 	fin >> input.pavarde;
-	int k;	
+	int k;
 	input.v.reserve(10);
 	while (fin >> k)
 	{
@@ -99,34 +99,36 @@ void FileRead(deque<studentas> &studentai, ifstream &file)
 }
 void dequeSplit(deque <studentas> &studentai, int &b, unsigned int &Vilgis, unsigned int &Pilgis)
 {
-	for (size_t i = 0; i < studentai.size(); i++)
+	for (auto i = 0; i < studentai.size(); i++)
 	{
 		studentai[i].GetAverage();
 		studentai[i].getMedian();
 	}
-deque<studentas> kietekas;
-deque<studentas> vargsiukas;
+	deque<studentas> vargsiukas;
 	if (b == 1) {
-		for (size_t i = 0; i < studentai.size(); i++)
+		for (auto i = 0; i < studentai.size(); i++)
 		{
 			if (studentai[i].galutinis < 5)
+			{
 				vargsiukas.push_back(studentai[i]);
-		 	else
-		 		kietekas.push_back(studentai[i]);
+				studentai.erase(studentai.begin() + i);
+			}
 		}
+
 	}
 	else {
-		for (size_t i = 0; i < studentai.size(); i++)
+		for (auto i = 0; i < studentai.size(); i++)
 		{
 			if (studentai[i].galutmed < 5)
+			{
 				vargsiukas.push_back(studentai[i]);
-			else
-				kietekas.push_back(studentai[i]);
+				studentai.erase(studentai.begin() + i);
+			}
 		}
 	}
-std::sort(kietekas.begin(),kietekas.end(),compare_by_word);
-
-	std::sort(vargsiukas.begin(),vargsiukas.end(),compare_by_word);
+	studentai.shrink_to_fit();
+	std::sort(studentai.begin(), studentai.end(), compare_by_word);
+	std::sort(vargsiukas.begin(), vargsiukas.end(), compare_by_word);
 
 	std::ofstream failas("vargsiukai.txt");
 	failas << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
@@ -147,29 +149,29 @@ std::sort(kietekas.begin(),kietekas.end(),compare_by_word);
 	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute1(Pilgis + Vilgis + 40, '-');
 	failas1 << eilute1 << endl;
-	for (size_t i = 0; i < kietekas.size(); i++)
+	for (size_t i = 0; i < studentai.size(); i++)
 	{
-		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << kietekas[i].pavarde;
-		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << kietekas[i].vardas;
-		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << kietekas[i].galutinis << kietekas[i].galutmed << endl;
+		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
+		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
+		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
 	}
 }
 void SpartosAnalize(deque<studentas> &studentai)
 {
 	unsigned int Pilgis = 7;
 	unsigned int Vilgis = 6;
-		cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
+	cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
 	int b = CinFail(0);
 	string pav;
-	cout<<"Iveskite studentu failo pavadinima"<<endl;
-	cin>>pav;
+	cout << "Iveskite studentu failo pavadinima" << endl;
+	cin >> pav;
 	cout << "Pradedamas matuoti laikas" << endl;
 	Timer t;
-	
+
 	ifstream file(pav);
-	if(!file)
+	if (!file)
 	{
-		cout<<"Pavadinimas ivestas neteisingai"<<endl;
+		cout << "Pavadinimas ivestas neteisingai" << endl;
 		exit(EXIT_FAILURE);
 	}
 	while (!file.eof())
