@@ -85,3 +85,36 @@ clean:
 * List - sukuria exe file realizacijai su list
 * GenerateFile sukuria exe file .txt file generavimui
 * clean isvalo .exe ir .o failus
+# 1.0 versijos analize
+# strategija 1 100000 studentu 10 pazymiu
+* List 3.90302 s
+* vector 4.04883 s
+* deque 4.00563 s
+# strategija 1 100 studentu 10 pazymiu
+* list 0.0488002 s
+* vector 0.0322001 s
+* deque 0.0312001 s
+# strategija 1 1000 studentu 10 pazymiu
+* list 0.0468001 s
+* vector 0.0624001 s
+* deque 0.0976004 s
+# strategija 1 10000 studentu 10 pazymiu
+* list 0.432201 s
+* vector 0.448207 s
+* deque 0.376004 s
+# strategija 2 100000 studentu 10 pazymiu
+* list 3.75001 s
+* vector nesulaukiau, bet virs 5min.
+* deque nesulaukiau, bet virs 3min.
+# strategija 2 10000  studentu 10 pazymiu
+* list 0.589413 s
+* vector 11.973 s
+* deque 5.93621 s
+# strategija 2 1000   studentu 10 pazymiu
+* list 0.0624002 s
+* vector 0.1716 s
+* deque 0.1248 s
+# strategija 2 100    studentu 10 pazymiu
+* list 0.0156 s
+* vector 0.0312001 s
+* deque 0.0156 s
