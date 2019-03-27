@@ -120,3 +120,8 @@ clean:
 * list 0.0156 s
 * vector 0.0312001 s
 * deque 0.0156 s
+# strategija 2 optimizuota 
+* 100 studentu 10 pazymiu 0.0475008 s
+* 1000 studentu 10 pazymiu 0.0900013 s
+* 10000 studentu 10 pazymiu 0.547508 s
+* 100000 studentu 10 pazymiu 3.93757 s
