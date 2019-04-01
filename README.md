@@ -24,7 +24,8 @@
 
 [0.5 Dokumentacija](#user-content-versijos-05-analize)
 
-
+## V0.1 paaiskinimas
+C-array versija padaryta su linked list, kad saugoti studentus ir c masyvu, kad saugoti ju nd.
 ## V0.2 failo formatas
 Mano programoje nenaudojama pirma eilute su "nd1 nd2 nd3"
 Vardas Pavarde nd nd nd nd ... Egzaminas
@@ -36,6 +37,8 @@ Makefile commands:
 Sukuria .o failus ir juos sulinkina i "main" faila.
 ## clean
 istrina main ir .o failus
+## V0.3 komentarai
+Panaudota try catch tik viena karta, nes ir taip daug kur buvo naudojama if'ai kad patikrinti.
 ## V0.4 Rezultatai
 ------------------------------------------------------------
 * 10 studentu 10 pazymiu
