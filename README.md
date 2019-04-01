@@ -32,11 +32,6 @@ Vardas Pavarde nd nd nd nd ... Egzaminas
 ```
 Andrius Jokubauskas 2 4 5 6 9 9 9 5
 ```
-Makefile commands:
-## make
-Sukuria .o failus ir juos sulinkina i "main" faila.
-## clean
-istrina main ir .o failus
 ## V0.3 komentarai
 Panaudota try catch tik viena karta, nes ir taip daug kur buvo naudojama if'ai kad patikrinti.
 ## V0.4 Rezultatai
@@ -52,6 +47,12 @@ Panaudota try catch tik viena karta, nes ir taip daug kur buvo naudojama if'ai k
 * 100000 studentu 10 pazymiu
 ![Rezultatai](https://i.imgur.com/W0WxAto.png)
 ------------
+Makefile commands:
+## make
+Sukuria .o failus ir juos sulinkina i "main" faila.
+## clean
+istrina main ir .o failus
+
 # Versijos 0.5 analize
 # 10 studentu 20 pazymiu
 * Vector 0.0312 s
