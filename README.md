@@ -135,3 +135,5 @@ clean:
 * 1000 studentu 10 pazymiu 0.0900013 s
 * 10000 studentu 10 pazymiu 0.547508 s
 * 100000 studentu 10 pazymiu 3.93757 s
+
+## Del makefile ver 1.0 zr. [0.5 Dokumentacija](#user-content-versijos-05-analize)
