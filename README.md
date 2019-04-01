@@ -13,6 +13,12 @@
 
 ## Versiju Fix'es
 [v0.4](https://github.com/Andriusjok/ObjekProg/releases/tag/ver0.4F) - (2019-03-10)
+[v0.5](https://github.com/Andriusjok/ObjekProg/releases/tag/V0.5makefile) - (2019-04-01)
+[v1.0pirma](https://github.com/Andriusjok/ObjekProg/releases/tag/V1_pirma_makefile) - (2019-04-01)
+[v1.0antra](https://github.com/Andriusjok/ObjekProg/releases/tag/V1_antra_makefile) - (2019-04-01)
+[v1.0antra.optimized](https://github.com/Andriusjok/ObjekProg/releases/tag/V1.opt.makefile) - (2019-04-01)
+
+
 # Link
 [Reikalavimai](https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis)
 
