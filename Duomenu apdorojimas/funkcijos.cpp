@@ -1,4 +1,6 @@
 #include "header.h"
+#include "Studentas.h"
+#include "timer.h"
 int ErrorFun(int nr)
 {
 	if (nr == 0)
@@ -50,122 +52,67 @@ int CinDecimal(int e)
 	return f;
 
 }
-
-bool compare_by_word(const studentas& lhs, const studentas& rhs) {
-	return lhs.pavarde < rhs.pavarde;
-}
-bool compare_by_name(const studentas& lhs, const studentas& rhs) {
-	return lhs.vardas < rhs.vardas;
-}
-bool compare_by_grades(studentas& lhs, studentas& rhs) {
-	return lhs.galutinis < rhs.galutinis;
-}
-void FindLongest(vector<studentas> &input, unsigned int &Vilgis, unsigned int &Pilgis)
+void Writing(std::ofstream & failas, vector <Studentas> & vargsiukas, unsigned int &Pilgis, unsigned int &Vilgis)
 {
-	for (auto i = 0; i < input.size(); i++)
-	{
-		if (Vilgis < input[i].vardas.length())
-			Vilgis = input[i].vardas.length();
-		if (Pilgis < input[i].pavarde.length())
-			Pilgis = input[i].pavarde.length();
-	}
-}
-void FileRead(vector<studentas> &studentai, ifstream &file)
-{
-	studentas input;
-	if (file.eof())
-		exit(EXIT_FAILURE);
-	string line;
-	getline(file, line);
-	istringstream fin(line);
-	fin >> input.vardas;
-	fin >> input.pavarde;
-	int k;
-	input.v.reserve(10);
-	while (fin >> k)
-	{
-		if (k > 10 or k < 0) {
-			cout << "Pazymiai neteisingai ivesti faile" << endl;
-			exit(EXIT_FAILURE);
-
-		}
-		input.v.push_back(k);
-
-	}
-
-	input.e = input.v.back();
-	input.v.pop_back();
-	studentai.push_back(input);
-}
-void vectorSplit(vector <studentas> &studentai, int &b, unsigned int &Vilgis, unsigned int &Pilgis)
-{
-	for (auto i = 0; i < studentai.size(); i++)
-	{
-		studentai[i].GetAverage();
-		studentai[i].getMedian();
-	}
-	vector<studentas> vargsiukas;
-	if (b == 1) {
-		for (auto i = 0; i < studentai.size(); i++)
-		{
-			if (studentai[i].galutinis < 5)
-			{
-				vargsiukas.push_back(studentai[i]);
-				studentai.erase(studentai.begin() + i);
-			}
-		}
-
-	}
-	else {
-		for (auto i = 0; i < studentai.size(); i++)
-		{
-			if (studentai[i].galutmed < 5)
-			{
-				vargsiukas.push_back(studentai[i]);
-				studentai.erase(studentai.begin() + i);
-			}
-		}
-	}
-	std::sort(studentai.begin(), studentai.end(), compare_by_word);
-	std::sort(vargsiukas.begin(), vargsiukas.end(), compare_by_word);
-
-	std::ofstream failas("vargsiukai.txt");
 	failas << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
 	failas << setw(Vilgis + 6) << std::left << setfill(' ') << "Vardas ";
 	failas << setw(16) << std::left << setfill(' ') << "Galutinis vid. ";
 	failas << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
 	string eilute(Pilgis + Vilgis + 40, '-');
 	failas << eilute << endl;
-	for (auto i = 0; i < vargsiukas.size(); i++) {
-		failas << setw(Pilgis + 6) << std::left << setfill(' ') << vargsiukas[i].pavarde;
-		failas << setw(Vilgis + 6) << std::left << setfill(' ') << vargsiukas[i].vardas;
-		failas << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << vargsiukas[i].galutinis << vargsiukas[i].galutmed << endl;
+	for (size_t i = 0; i < vargsiukas.size(); i++) {
+		failas << setw(Pilgis + 6) << std::left << setfill(' ') << vargsiukas[i].pavarde();
+		failas << setw(Vilgis + 6) << std::left << setfill(' ') << vargsiukas[i].vardas();
+		failas << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << vargsiukas[i].galutinisVid() << vargsiukas[i].galutinisMed() << endl;
 	}
-	std::ofstream failas1("kietekai.txt");
-	failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << "Pavarde ";
-	failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << "Vardas ";
-	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis vid. ";
-	failas1 << setw(16) << std::left << setfill(' ') << "Galutinis med. " << endl;
-	string eilute1(Pilgis + Vilgis + 40, '-');
-	failas1 << eilute1 << endl;
-	for (auto i = 0; i < studentai.size(); i++)
+
+}
+void vectorSplit(vector <Studentas> &studentai, vector <Studentas> &vargsiukas, int &b, int& z, unsigned int &Vilgis, unsigned int &Pilgis)
+
+{
+	if (b == 1)
 	{
-		failas1 << setw(Pilgis + 6) << std::left << setfill(' ') << studentai[i].pavarde;
-		failas1 << setw(Vilgis + 6) << std::left << setfill(' ') << studentai[i].vardas;
-		failas1 << setw(16) << std::left << setfill(' ') << std::setprecision(2) << std::fixed << studentai[i].galutinis << studentai[i].galutmed << endl;
+		vector<Studentas>::iterator it = std::partition(studentai.begin(), studentai.end(), compare_by_grades);
+		std::copy(it, studentai.end(), std::back_inserter(vargsiukas));
+		studentai.erase(it, studentai.end());
+		studentai.shrink_to_fit();
+	}
+	else
+	{
+		vector<Studentas>::iterator it = std::partition(studentai.begin(), studentai.end(), compare_by_mediana);
+		std::copy(it, studentai.end(), std::back_inserter(vargsiukas));
+		studentai.erase(it, studentai.end());
+		studentai.shrink_to_fit();
+
+	}
+	if (z == 0) {
+		std::sort(studentai.begin(), studentai.end(), compare_by_word);
+		std::sort(vargsiukas.begin(), vargsiukas.end(), compare_by_word);
+	} else
+	{
+		std::sort(studentai.begin(), studentai.end(), compare_by_name);
+		std::sort(vargsiukas.begin(), vargsiukas.end(), compare_by_name);
+
 	}
 }
-void SpartosAnalize(vector<studentas> &studentai)
+void SpartosAnalize()
 {
+	vector<Studentas> studentai;
+	vector<Studentas> vargsiukas;
 	unsigned int Pilgis = 7;
 	unsigned int Vilgis = 6;
-	cout << "Ar norite skaiciuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
+	cout << "Ar norite rusiuoti pagal medianas ar vidurkius? 1-vidurkis 0-mediana" << endl;
 	int b = CinFail(0);
+
+	cout << "Ar norite rikiuoti pagal varda ar pavarde? 1-vardas 0-pavarde" << endl;
+	int z = CinFail(0);
 	string pav;
 	cout << "Iveskite studentu failo pavadinima" << endl;
 	cin >> pav;
 	cout << "Pradedamas matuoti laikas" << endl;
 	Timer t;
+
+
 
 	ifstream file(pav);
 	if (!file)
@@ -175,9 +122,14 @@ void SpartosAnalize(vector<studentas> &studentai)
 	}
 	while (!file.eof())
 	{
-		FileRead(studentai, file);
-	}
-	FindLongest(studentai, Vilgis, Pilgis);
-	vectorSplit(studentai, b, Vilgis, Pilgis);
+		studentai.emplace_back(file, Vilgis, Pilgis);
+	};
+
+
+	vectorSplit(studentai, vargsiukas, b, z, Vilgis, Pilgis);
+	std::ofstream failas1 ("kietekai.txt");
+	std::ofstream failas2 ("vargsiukai.txt");
+	Writing(failas1, vargsiukas, Pilgis, Vilgis);
+	Writing(failas2, studentai, Pilgis, Vilgis);
 	cout << "Praejo " << t.elapsed() << " s" << endl;
 }

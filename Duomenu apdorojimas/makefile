@@ -1,10 +1,6 @@
 CC=g++
-Vector:
-	$(CC) -o Vector VectorApdorojimas.cpp funkcijos.cpp
-Deque: 
-	$(CC) -o Deque DeQueApdorjimas.cpp Dequefunkcijos.cpp
-List:
-	$(CC) -o List ListApdorojimas.cpp Listfunkcijos.cpp
+main:
+	$(CC) -o main main.cpp funkcijos.cpp Studentas.cpp
 GenerateFile:
 	$(CC) -o GenerateFile SarasoGen.cpp
 clean:
