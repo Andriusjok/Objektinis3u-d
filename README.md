@@ -1,7 +1,8 @@
-﻿# Objektinis Programavimas
+# Objektinis Programavimas
 
 
 ## Antra užduotis
+### [v1.0 optimizuota antra strategija](https://github.com/Andriusjok/ObjekProg/releases/tag/V1.0.optimizuota) - (2019-03-24)
 ### [v1.0 antra strategija](https://github.com/Andriusjok/ObjekProg/releases/tag/V1.02Strat) - (2019-03-24) 
 ### [v1.0 pirma strategija](https://github.com/Andriusjok/ObjekProg/releases/tag/V1_pirma_strat) - (2019-03-24)  
 ### [v0.5](https://github.com/Andriusjok/ObjekProg/releases/tag/Version0.5) - (2019-03-10) 
@@ -12,23 +13,27 @@
 
 ## Versiju Fix'es
 [v0.4](https://github.com/Andriusjok/ObjekProg/releases/tag/ver0.4F) - (2019-03-10)
+[v0.5](https://github.com/Andriusjok/ObjekProg/releases/tag/V0.5makefile) - (2019-04-01)
+[v1.0pirma](https://github.com/Andriusjok/ObjekProg/releases/tag/V1_pirma_makefile) - (2019-04-01)
+[v1.0antra](https://github.com/Andriusjok/ObjekProg/releases/tag/V1_antra_makefile) - (2019-04-01)
+[v1.0antra.optimized](https://github.com/Andriusjok/ObjekProg/releases/tag/V1.opt.makefile) - (2019-04-01)
+
+
 # Link
 [Reikalavimai](https://github.com/objprog/paskaitos2019/wiki/2-oji-u%C5%BEduotis)
 
 [0.5 Dokumentacija](#user-content-versijos-05-analize)
 
-
+## V0.1 paaiskinimas
+C-array versija padaryta su linked list, kad saugoti studentus ir c masyvu, kad saugoti ju nd.
 ## V0.2 failo formatas
 Mano programoje nenaudojama pirma eilute su "nd1 nd2 nd3"
 Vardas Pavarde nd nd nd nd ... Egzaminas
 ```
 Andrius Jokubauskas 2 4 5 6 9 9 9 5
 ```
-Makefile commands:
-## make
-Sukuria .o failus ir juos sulinkina i "main" faila.
-## clean
-istrina main ir .o failus
+## V0.3 komentarai
+Panaudota try catch tik viena karta, nes ir taip daug kur buvo naudojama if'ai kad patikrinti.
 ## V0.4 Rezultatai
 ------------------------------------------------------------
 * 10 studentu 10 pazymiu
@@ -42,6 +47,12 @@ istrina main ir .o failus
 * 100000 studentu 10 pazymiu
 ![Rezultatai](https://i.imgur.com/W0WxAto.png)
 ------------
+Makefile commands:
+## make
+Sukuria .o failus ir juos sulinkina i "main" faila.
+## clean
+istrina main ir .o failus
+
 # Versijos 0.5 analize
 # 10 studentu 20 pazymiu
 * Vector 0.0312 s
@@ -119,3 +130,10 @@ clean:
 * list 0.0156 s
 * vector 0.0312001 s
 * deque 0.0156 s
+# strategija 2 optimizuoto vector varianto rezultatai
+* 100 studentu 10 pazymiu 0.0475008 s
+* 1000 studentu 10 pazymiu 0.0900013 s
+* 10000 studentu 10 pazymiu 0.547508 s
+* 100000 studentu 10 pazymiu 3.93757 s
+
+## Del makefile ver 1.0 zr. [0.5 Dokumentacija](#user-content-versijos-05-analize)
