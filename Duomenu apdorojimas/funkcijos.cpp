@@ -129,7 +129,7 @@ void SpartosAnalize()
 	vectorSplit(studentai, vargsiukas, b, z, Vilgis, Pilgis);
 	std::ofstream failas1 ("kietekai.txt");
 	std::ofstream failas2 ("vargsiukai.txt");
-	Writing(failas1, vargsiukas, Pilgis, Vilgis);
-	Writing(failas2, studentai, Pilgis, Vilgis);
+	Writing(failas2, vargsiukas, Pilgis, Vilgis);
+	Writing(failas1, studentai, Pilgis, Vilgis);
 	cout << "Praejo " << t.elapsed() << " s" << endl;
 }

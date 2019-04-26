@@ -1,6 +1,7 @@
 #include "Studentas.h"
 #include "header.h"
 
+
 bool compare_by_word(const Studentas& lhs, const Studentas& rhs) {
 	return lhs.pavarde() < rhs.pavarde();
 }
@@ -30,8 +31,8 @@ Studentas::Studentas(ifstream& file, unsigned int &Vilgis, unsigned int &Pilgis)
 
 	fin >> vardas_;
 	fin >> pavarde_;
-	if (vardas_.size()>Vilgis)
-		Vilgis=vardas_.size();
+Vilgis=*this>>Vilgis;
+Pilgis=*this<<Pilgis;
 	if(pavarde_.size()>Pilgis)
 		Pilgis=pavarde_.size();
 	int k;
@@ -43,7 +44,8 @@ Studentas::Studentas(ifstream& file, unsigned int &Vilgis, unsigned int &Pilgis)
 			exit(EXIT_FAILURE);
 
 		}
-		v_.push_back(k);
+
+		*this+=k;
 
 	}
 	setEback();
@@ -77,4 +79,9 @@ void Studentas::getAverage()
 void Studentas::setEback() {
 	e_ = v_.back();
 	v_.pop_back();
+}
+// OPERATORIUS v1.2
+bool operator == (const Studentas& a, const Studentas & b)
+{
+	return a.galutinisVid()==b.galutinisVid() or a.galutinisMed()==b.galutinisMed();
 }
