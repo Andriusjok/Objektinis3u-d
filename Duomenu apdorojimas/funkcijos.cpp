@@ -70,11 +70,15 @@ void Writing(std::ofstream & failas, vector <Studentas> & vargsiukas, unsigned i
 void vectorSplit(vector <Studentas> &studentai, vector <Studentas> &vargsiukas, int &b, int& z, unsigned int &Vilgis, unsigned int &Pilgis)
 
 {
+
 	if (b == 1)
 	{
 		vector<Studentas>::iterator it = std::partition(studentai.begin(), studentai.end(), compare_by_grades);
+		
 		std::copy(it, studentai.end(), std::back_inserter(vargsiukas));
+		
 		studentai.erase(it, studentai.end());
+		
 		studentai.shrink_to_fit();
 	}
 	else
@@ -85,6 +89,7 @@ void vectorSplit(vector <Studentas> &studentai, vector <Studentas> &vargsiukas, 
 		studentai.shrink_to_fit();
 
 	}
+
 	if (z == 0) {
 		std::sort(studentai.begin(), studentai.end(), compare_by_word);
 		std::sort(vargsiukas.begin(), vargsiukas.end(), compare_by_word);
@@ -124,8 +129,6 @@ void SpartosAnalize()
 	{
 		studentai.emplace_back(file, Vilgis, Pilgis);
 	};
-
-
 	vectorSplit(studentai, vargsiukas, b, z, Vilgis, Pilgis);
 	std::ofstream failas1 ("kietekai.txt");
 	std::ofstream failas2 ("vargsiukai.txt");

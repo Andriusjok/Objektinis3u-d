@@ -1,23 +1,26 @@
-#include "header.h"
 #pragma once
-class Studentas
+#include "header.h"
+#include "Zmogus.h"
+#include "vector"
+using std::vector;
+//#include "Vector.h"
+class Studentas : public Zmogus
 {
-private:
-	string vardas_;
-	string pavarde_;
+protected:
 	vector<int> v_;
 	int e_;
-	double galutinis_ = 0;
-	double galutmed_ = 0;
+	double galutinis_;	
+	double galutmed_;
 public:
-	Studentas(): vardas_(""), pavarde_(""), e_(0) {}
-	Studentas(string vardas, string pavarde) : vardas_(vardas), pavarde_(pavarde), e_(0) { }
+	
+	Studentas(string pavarde = "", string vardas = "", double e = 0, double galutinis = 0, double galutinismed = 0) : Zmogus(pavarde, vardas), e_(e), galutinis_(galutinis), galutmed_(galutinis) { }
 	Studentas(ifstream& input, unsigned int &Vilgis, unsigned int &Pilgis);
 	inline string vardas() const {return vardas_;}
 	inline string pavarde() const {return pavarde_;}
 	double galutinisVid() const {return galutinis_;}
 	double galutinisMed() const {return galutmed_;}
 
+void verification(){}
 	void setVardas(string vardas) {vardas_ = vardas;}
 	void setPavarde(string pavarde) {pavarde_ = pavarde;}
 	void setE(int e) {e_ = e;}
@@ -32,24 +35,21 @@ public:
 
 	// operatoriai
 
-void operator +=(int b)
-{
-	this->v_.push_back(b);
-}
-int operator >>(unsigned int & b)
-{	if (this->vardas_.size()>b)
-	return  this->vardas_.size();
-	else
-	return b;
-}
+void operator +=(int b);
 
-int operator <<(unsigned int & b)
-{	if (this->pavarde_.size()>b)
-	return  this->pavarde_.size();
-	else
-	return b;
-}
+int operator >>(unsigned int & b);
+
+
+int operator <<(unsigned int & b);
+
 	};
+
+
+
+
+
+
+
 bool compare_by_word(const Studentas& lhs, const Studentas& rhs);
 bool compare_by_name(const Studentas& lhs, const Studentas& rhs);
 bool compare_by_grades(const Studentas& lhs);

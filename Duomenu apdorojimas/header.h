@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <vector>
 #include <algorithm>
 #include <random>
 #include <fstream>
@@ -15,7 +14,6 @@ using std::cin;
 using std::string;
 using std::setw;
 using std::setfill;
-using std::vector;
 using std::getline;
 using std::ifstream;
 using std::istringstream;

@@ -20,6 +20,7 @@ bool compare_by_mediana(const Studentas& lhs)
 	return true;
 	return false;
 }
+
 Studentas::Studentas(ifstream& file, unsigned int &Vilgis, unsigned int &Pilgis)
 {
 	if (file.eof())
@@ -77,11 +78,29 @@ void Studentas::getAverage()
 		galutinis_ = 0.6 * e_;
 }
 void Studentas::setEback() {
-	e_ = v_.back();
+	e_ = v_[v_.size()-1];
 	v_.pop_back();
 }
 // OPERATORIUS v1.2
 bool operator == (const Studentas& a, const Studentas & b)
 {
 	return a.galutinisVid()==b.galutinisVid() or a.galutinisMed()==b.galutinisMed();
+}
+
+void Studentas::operator +=(int b)
+{
+	this->v_.push_back(b);
+}
+int Studentas::operator >>(unsigned int & b)
+{	if (this->vardas_.size()>b)
+	return  this->vardas_.size();
+	else
+	return b;
+}
+
+int Studentas::operator <<(unsigned int & b)
+{	if (this->pavarde_.size()>b)
+	return  this->pavarde_.size();
+	else
+	return b;
 }
