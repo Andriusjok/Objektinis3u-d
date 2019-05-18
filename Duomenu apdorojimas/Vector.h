@@ -14,62 +14,62 @@
 		typedef T* iterator;
 		typedef const T* const_iterator;
 	private:
-		pointer elem_;
+		pointer Data_;
 		size_type size_;
 		size_type capacity_;
 
 	public:
 
 		//konstruktoriai
-		vector() : size_{0}, capacity_{0}, elem_{nullptr} {}
+		vector() : size_{0}, capacity_{0}, Data_{nullptr} {}
 		vector(size_type s, value_type val) {
 			if (s < 0) throw std::out_of_range {"class vector cannot contain negative amount of values"};
 			size_ = s;
 			capacity_ = size_;
-			elem_ = new value_type[capacity_];
+			Data_ = new value_type[capacity_];
 
-			std::fill_n(elem_, s, val);
+			std::fill_n(Data_, s, val);
 		}
 		vector(const vector& vec) :
 			size_{vec.size_},
 			capacity_{vec.size_},
-			elem_{new value_type[vec.size_]}
+			Data_{new value_type[vec.size_]}
 		{
 			for (int i = 0; i != size_; ++i)
-				elem_[i] = vec.elem_[i];
+				Data_[i] = vec.Data_[i];
 		}
 		vector(std::initializer_list<value_type> il) :
 			size_{il.size()},
 			capacity_{il.size()},
-			elem_{new value_type[il.size()]}
+			Data_{new value_type[il.size()]}
 		{
-			std::copy(il.begin(), il.end(), elem_);
+			std::copy(il.begin(), il.end(), Data_);
 		}
 		vector(vector&& vec) :
 			size_{vec.size_},
 			capacity_{vec.size_},
-			elem_{vec.elem_}
+			Data_{vec.Data_}
 		{
-			vec.elem_ = nullptr;
+			vec.Data_ = nullptr;
 			vec.size_ = 0;
 			vec.capacity_ = 0;
 		}
 		//destruktorius
 
-		~vector() {	delete[] elem_; }
+		~vector() {	delete[] Data_; }
 
 		//getteriai
 		iterator begin()
 		{
-			return elem_;
+			return Data_;
 		}
 		iterator back()
 		{
-			return elem[size()-1];
+			return Data_[size()-1];
 		}
 		iterator end()
 		{
-			return elem_ + size_;
+			return Data_ + size_;
 		}
 		size_type size() const
 		{
@@ -89,24 +89,24 @@
 		reference operator[](size_type a)
 		{
 			if (a > size_ or a < 0) throw std::out_of_range {"ref operator []"};
-			return elem_[a];
+			return Data_[a];
 		}
 		const_reference operator[](size_type i) const
 		{
 			if (i < 0 or capacity() <= i)
 				throw std::out_of_range{"const ref operator []"};
-			return elem_[i];
+			return Data_[i];
 		}
 		//move
 		vector<value_type>& operator=(vector&& v)
 		{
 			if (&v == this)
 				return *this;
-			delete[] elem_;
-			elem_ = v.elem_;
+			delete[] Data_;
+			Data_ = v.Data_;
 			capacity_ = size_;
 			size_ = v.size_;
-			v.elem_ = nullptr;
+			v.Data_ = nullptr;
 			v.capacity_ = 0;
 			v.size_ = 0;
 			return *this;
@@ -114,10 +114,10 @@
 	//copy assigment
 		vector<value_type>& operator=(const vector& v) {
 			if (&v == this) return *this;
-			delete[] elem_;
-			elem_ = new value_type[v.size_];
+			delete[] Data_;
+			Data_ = new value_type[v.size_];
 			for (auto i = 0; i != v.size_; ++i)
-				elem_[i] = v.elem_[i];
+				Data_[i] = v.Data_[i];
 			capacity_ = v.capacity_;
 			size_ = v.size_;
 
@@ -133,9 +133,9 @@
 				temp = new value_type[rsize];
 				for (auto i = 0; i < rsize; i++)
 				{
-					temp[i] = elem_[i];
+					temp[i] = Data_[i];
 				}
-				elem_ = temp;
+				Data_ = temp;
 				temp = nullptr;
 				size_ = rsize;
 
@@ -145,11 +145,11 @@
 				temp = new value_type[rsize];
 				for (auto i = 0; i < size_; i++)
 				{
-					temp[i] = elem_[i];
+					temp[i] = Data_[i];
 				}
 				size_ = rsize;
-				delete [] elem_;
-				elem_ = temp;
+				delete [] Data_;
+				Data_ = temp;
 				temp = nullptr;
 			}
 			if (rsize > capacity_)
@@ -159,15 +159,15 @@
 				temp = new value_type[rsize];
 				for (auto i = 0; i < size_; i++)
 				{
-					temp[i] = elem_[i];
+					temp[i] = Data_[i];
 				}
 				for (auto i = size_; i < capacity_; i++)
 				{
 					temp[i] = value_type();
 				}
 				size_ = rsize;
-				delete [] elem_;
-				elem_ = temp;
+				delete [] Data_;
+				Data_ = temp;
 				temp = nullptr;
 
 			}
@@ -177,18 +177,18 @@
 			size_type del;
 			for (size_type i = 0; i < size_; ++i)
 			{
-				if (&elem_[i] == pointer)
+				if (&Data_[i] == pointer)
 					del = i;
 
 
 			}
 			for (size_type i = del; i < size_; i++)
 			{
-				elem_[i] = elem_[i + 1];
+				Data_[i] = Data_[i + 1];
 			}
-			elem_[size_].~value_type();
+			Data_[size_].~value_type();
 			size_ = size_ - 1;
-			return &elem_[del];
+			return &Data_[del];
 		}
 		iterator erase(iterator start, iterator end)
 		{
@@ -196,12 +196,12 @@
 			size_type en;
 			for (size_type i = 0; i < size_; ++i)
 			{
-				if (&elem_[i] == start)
+				if (&Data_[i] == start)
 				{
 					st = i;
 
 				}
-				if (&elem_[i] == end - 1)
+				if (&Data_[i] == end - 1)
 				{
 					en = i;
 
@@ -214,13 +214,13 @@
 			{
 				int z = 1;
 				if (en + z < size_) {
-					elem_[i] = elem_[en + z];
-					elem_[en + z].~value_type();
-				} else elem_[i].~value_type();
+					Data_[i] = Data_[en + z];
+					Data_[en + z].~value_type();
+				} else Data_[i].~value_type();
 				z++;
 			}
 			size_ = size_ - (en - st +1);
-			return &elem_[size_-1];
+			return &Data_[size_-1];
 		}
 		void reserve(size_type rcapacity)
 		{
@@ -231,10 +231,10 @@
 
 				for (auto i = 0; i < size_; i++)
 				{
-					temp[i] = elem_[i];
+					temp[i] = Data_[i];
 				}
-				delete[] elem_;
-				elem_ = temp;
+				delete[] Data_;
+				Data_ = temp;
 				temp = nullptr;
 			}
 		}
@@ -245,14 +245,14 @@
 			{
 				capacity_++;
 				size_++;
-				elem_ = new value_type[size_];
-				elem_[0] = value;
+				Data_ = new value_type[size_];
+				Data_[0] = value;
 			}
 			else
 			{
 				if (size_ >= capacity_)
-					reserve(capacity_ * 2);
-				elem_[size_++] = value;
+				reserve(capacity_ * 2);
+				Data_[size_++] = value;
 			}
 
 		}
@@ -263,8 +263,8 @@
 			{
 				capacity_++;
 				size_++;
-				elem_ = new value_type[size_];
-				elem_[0] = value;
+				Data_ = new value_type[size_];
+				Data_[0] = value;
 
 			}
 			else
@@ -272,28 +272,28 @@
 				if (size_ >= capacity_)
 					reserve(capacity_ * 2);
 
-				elem_[size_++] = value;
+				Data_[size_++] = value;
 			}
 
 		}
 		void pop_back()
 		{
 			if (size_ == 0) throw std::out_of_range {"pop_back"};
-			elem_[size_ - 1].~value_type();
+			Data_[size_ - 1].~value_type();
 			size_--;
 		}
 		void shrink_to_fit()
 		{
 			if (capacity_ > size_)
 			{
-				value_type *tmp = new value_type[size_];
+				value_type *temp = new value_type[size_];
 				for (auto i = 0; i < size_; i++)
 				{
-					tmp[i] = elem_[i];
+					temp[i] = Data_[i];
 				}
-				delete[] elem_;
-				elem_ = tmp;
-				tmp = nullptr;
+				delete[] Data_;
+				Data_ = temp;
+				temp = nullptr;
 				capacity_ = size_;
 			}
 		}
