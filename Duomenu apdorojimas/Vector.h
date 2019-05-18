@@ -65,7 +65,7 @@
 		}
 		iterator back()
 		{
-			return elem_[size()-1];
+			return elem[size()-1];
 		}
 		iterator end()
 		{

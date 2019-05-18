@@ -87,3 +87,60 @@ clean:
 * 100000 studentu 10 pazymiu 1.14307 s
 
 # -O3 nepadare jokio efekto.
+
+## Versija 1.5
+
+Sukurta abstrakti klase Zmogus faile Zmogus.h
+
+## Versija 2.0
+
+Sukurta Doxygen dokumentacija
+Panaudoti Google testai
+pridetas vector klases testavimas
+
+## Kad paleisti programa su Vector implementacija reikia nueiti i "Vector test aplanka"
+makefile make - sukuria .exe
+makefile GenerateFile - leidzia sugeneruot studentus
+makefile clean - valo
+```
+#include "pch.h"
+#include "Studentas.h"
+#include "Zmogus.h"
+#include "header.h"
+#include <gtest/gtest.h>
+
+Studentas v;
+v.pushV(5);
+v.pushV(5);
+v.pushV(2);
+v.pushV(3);
+v.pushV(10);
+TEST(Vidurkis, Test) {
+  ASSERT_EQ(5,getAverage();
+  
+}
+TEST(Mediana, Test) {
+	ASSERT_EQ(5, getMedian();
+
+}
+```
+
+
+```
+Running main() from gtest_main.cc
+[==========] Running 5 tests from 5 test cases.
+[----------] Global test environment set-up.
+[----------] 1 test from getMedian
+[ RUN      ] getMedian.Test
+[       OK ] getMedian.Test (0 ms)
+[----------] 1 test from getMedian (0 ms total)
+
+[----------] 1 test from getAverage
+[ RUN      ] getAverage.Test
+[       OK ] getAverage.Test (0 ms)
+[----------] 1 test from getAverage (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 2 test cases ran. (1 ms total)
+[  PASSED  ] 2 tests.
+```
