@@ -87,7 +87,18 @@ clean:
 * 100000 studentu 10 pazymiu 1.14307 s
 
 # -O3 nepadare jokio efekto.
+## Versija 1.2
+Pridėti 3 operatoriai
+```
+void operator +=(int b);
+push_back'ina paduotus pazymius;
+int operator >>(unsigned int & b);
+tikrina ar paduotas vardo ilgis didesnis ir returnina, kuris didesnis.
 
+int operator <<(unsigned int & b);
+
+tikrina ar paduotas pavardes ilgis didesnis ir returnina, kuris didesnis.
+```
 ## Versija 1.5
 
 Sukurta abstrakti klase Zmogus faile Zmogus.h
